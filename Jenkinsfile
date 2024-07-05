@@ -5,17 +5,12 @@ pipeline {
         maven 'maven'
     }
     
-    environment {
-        PATH = "/c/Program Files/Git/bin:/c/Program Files/Git/usr/bin:${env.PATH}"
-    }
-    
     stages {
         stage('Build') {
             steps {
                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
-                sh '''
-                #!/bin/bash
-                nohup mvn -Dmaven.test.failure.ignore=true clean package &
+                bat '''
+                mvn -Dmaven.test.failure.ignore=true clean package
                 '''
             }
             post {
@@ -28,7 +23,7 @@ pipeline {
         
         stage("Deploy to QA") {
             steps {
-                echo "deploy to qa"
+                echo("deploy to qa")
             }
         }
         
@@ -36,9 +31,8 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/vyom008/Buffy_RestAssured_Framework_2024.git'
-                    sh '''
-                    #!/bin/bash
-                    nohup mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml &
+                    bat '''
+                    mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml
                     '''
                 }
             }
@@ -60,7 +54,7 @@ pipeline {
         
         stage("Deploy to STAGE") {
             steps {
-                echo "deploy to STAGE done"
+                echo("deploy to STAGE done")
             }
         }
         
@@ -68,9 +62,8 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/vyom008/Buffy_RestAssured_Framework_2024.git'
-                    sh '''
-                    #!/bin/bash
-                    nohup mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml &
+                    bat '''
+                    mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml
                     '''
                 }
             }
@@ -92,7 +85,7 @@ pipeline {
         
         stage("Deploy to PROD") {
             steps {
-                echo "deploy to PROD"
+                echo("deploy to PROD")
             }
         }
     }
