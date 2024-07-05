@@ -58,6 +58,18 @@ pipeline {
             }
         }
         
+        stage('Publish Extent Report - QA') {
+    	steps {
+        publishHTML([allowMissing: false,
+                     alwaysLinkToLastBuild: false,
+                     keepAll: false,
+                     reportDir: 'build',
+                     reportFiles: 'TestExecutionReport.html',
+                     reportName: 'HTML Extent Report',
+                     reportTitles: ''])
+    }
+	}
+        
         stage("Deploy to STAGE") {
             steps {
                 echo "deploy to STAGE done"
@@ -76,19 +88,18 @@ pipeline {
             }
         }
         
-        stage("Publish Allure Reports - Staging") {
-            steps {
-                script {
-                    allure([
-                        includeProperties: false,
-                        jdk: '',
-                        properties: [],
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: '/allure-results']]
-                    ])
-                }
-            }
-        }
+       
+        stage('Publish Extent Report - Staging') {
+    	steps {
+        publishHTML([allowMissing: false,
+                     alwaysLinkToLastBuild: false,
+                     keepAll: false,
+                     reportDir: 'build',
+                     reportFiles: 'TestExecutionReport.html',
+                     reportName: 'HTML Extent Report',
+                     reportTitles: ''])
+    }
+	}
         
         
         stage("Deploy to PROD") {
