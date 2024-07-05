@@ -6,7 +6,7 @@ pipeline {
     }
     
     environment {
-        PATH = "C:\\Program Files\\Git\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\path\\to\\maven\\bin;%PATH%"
+        PATH = "C:\\Windows\\System32;C:\\Windows;C:\\Windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Git\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\TEST AUTOMATION BEGINS\\maven\\apache-maven-3.9.0\\bin;%PATH%"
     }
     
     stages {
