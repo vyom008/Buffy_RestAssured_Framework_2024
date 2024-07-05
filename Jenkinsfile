@@ -28,7 +28,7 @@ pipeline {
         
         stage("Deploy to QA") {
             steps {
-                echo("deploy to qa")
+                echo "deploy to qa"
             }
         }
         
@@ -60,7 +60,7 @@ pipeline {
         
         stage("Deploy to STAGE") {
             steps {
-                echo("deploy to STAGE done")
+                echo "deploy to STAGE done"
             }
         }
         
@@ -92,7 +92,7 @@ pipeline {
         
         stage("Deploy to PROD") {
             steps {
-                echo("deploy to PROD")
+                echo "deploy to PROD"
             }
         }
     }
