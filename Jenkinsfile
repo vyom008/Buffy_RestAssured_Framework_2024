@@ -58,6 +58,18 @@ pipeline {
             }
         }
         
+                		stage('Publish Extent Report') {
+    	steps {
+        publishHTML([allowMissing: false,
+                     alwaysLinkToLastBuild: false,
+                     keepAll: false,
+                     reportDir: 'target',
+                     reportFiles: 'APIExecutionReport.html',
+                     reportName: 'API HTML Extent Report',
+                     reportTitles: ''])
+    }
+	}
+        
         stage("Deploy to STAGE") {
             steps {
                 echo "deploy to STAGE done"
@@ -89,6 +101,18 @@ pipeline {
                 }
             }
         }
+        
+        		stage('Publish Extent Report') {
+    	steps {
+        publishHTML([allowMissing: false,
+                     alwaysLinkToLastBuild: false,
+                     keepAll: false,
+                     reportDir: 'target',
+                     reportFiles: 'APIExecutionReport.html',
+                     reportName: 'API HTML Extent Report',
+                     reportTitles: ''])
+    }
+	}
         
         stage("Deploy to PROD") {
             steps {
