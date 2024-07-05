@@ -5,11 +5,16 @@ pipeline {
         maven 'maven'
     }
     
+    environment {
+        PATH = "C:\\Program Files\\Git\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\path\\to\\maven\\bin;%PATH%"
+    }
+    
     stages {
         stage('Build') {
             steps {
                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
                 bat '''
+                echo %PATH%
                 mvn -Dmaven.test.failure.ignore=true clean package
                 '''
             }
@@ -23,7 +28,7 @@ pipeline {
         
         stage("Deploy to QA") {
             steps {
-                echo("deploy to qa")
+                echo "deploy to qa"
             }
         }
         
@@ -32,6 +37,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/vyom008/Buffy_RestAssured_Framework_2024.git'
                     bat '''
+                    echo %PATH%
                     mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml
                     '''
                 }
@@ -54,7 +60,7 @@ pipeline {
         
         stage("Deploy to STAGE") {
             steps {
-                echo("deploy to STAGE done")
+                echo "deploy to STAGE done"
             }
         }
         
@@ -63,6 +69,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/vyom008/Buffy_RestAssured_Framework_2024.git'
                     bat '''
+                    echo %PATH%
                     mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_sanity.xml
                     '''
                 }
@@ -85,7 +92,7 @@ pipeline {
         
         stage("Deploy to PROD") {
             steps {
-                echo("deploy to PROD")
+                echo "deploy to PROD"
             }
         }
     }
