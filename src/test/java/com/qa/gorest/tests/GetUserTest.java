@@ -26,8 +26,8 @@ public class GetUserTest extends BaseTest {
 
 	@Test(priority =2)
 	public void getUser() {
-		restClient.get(GOREST_ENDPOINT+"/7014594", true, true).then().log().all().assertThat().statusCode(APIHttpStatus.OK_200.getCode()).and()
-				.body("id", equalTo(7014594));
+		restClient.get(GOREST_ENDPOINT+"/7014620", true, true).then().log().all().assertThat().statusCode(APIHttpStatus.OK_200.getCode()).and()
+				.body("id", equalTo(7014620));
 	}
 
 	@Test(priority = 1)
