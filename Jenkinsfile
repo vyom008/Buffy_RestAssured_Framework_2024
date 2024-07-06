@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 git 'https://github.com/jglick/simple-maven-project-with-tests.git'
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
             post {
                 success {
@@ -32,15 +32,15 @@ stage('Deploy to QA') {
 stage('Run Docker Image with Regression Tests') {
     steps {
         script {
-            def exitCode = sh(script: "docker run --name apitestautomation2${BUILD_NUMBER} -e MAVEN_OPTS='-Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml' vyombuffy07/apitestautomation2", returnStatus: true)
+            def exitCode = bat(script: "docker run --name apitestautomation2${BUILD_NUMBER} -e MAVEN_OPTS='-Dsurefire.suiteXmlFiles=src/test/resources/testrunners/testng_regression.xml' vyombuffy07/apitestautomation2", returnStatus: true)
             if (exitCode != 0) {
                 currentBuild.result = 'FAILURE' // Mark the build as failed if tests fail
             }
             // Even if tests fail, copy the report (if present)
-            sh "docker start apitestautomation2${BUILD_NUMBER}"
+            bat "docker start apitestautomation2${BUILD_NUMBER}"
             // sh "sleep 60"
-            sh "docker cp apitestautomation2${BUILD_NUMBER}:/app/target/APIExecutionReport.html ${WORKSPACE}/target"
-            sh "docker rm -f apitestautomation2${BUILD_NUMBER}"
+            bat "docker cp apitestautomation2${BUILD_NUMBER}:/app/target/APIExecutionReport.html ${WORKSPACE}/target"
+            bat "docker rm -f apitestautomation2${BUILD_NUMBER}"
         }
     }
 }
