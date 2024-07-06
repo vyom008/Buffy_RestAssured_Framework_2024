@@ -39,8 +39,8 @@ stage('Run Docker Image with Regression Tests') {
             // Even if tests fail, copy the report (if present)
             bat "docker start apitestautomation2${BUILD_NUMBER}"
             // sh "sleep 60"
-            bat "docker cp apitestautomation2${BUILD_NUMBER}:/app/target/APIExecutionReport.html ${WORKSPACE}/target"
-            bat "docker rm -f apitestautomation2${BUILD_NUMBER}"
+            //bat "docker cp apitestautomation2${BUILD_NUMBER}:/app/target/APIExecutionReport.html ${WORKSPACE}/target"
+            //bat "docker rm -f apitestautomation2${BUILD_NUMBER}"
         }
     }
 }
